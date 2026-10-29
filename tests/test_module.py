@@ -41,7 +41,17 @@ class TestDramaDownloader(unittest.TestCase):
 
     def test_platforms_list(self):
         platforms = dd.get_all_platforms()
-        self.assertGreaterEqual(len(platforms), 11)
+        self.assertEqual(len(platforms), 11)
+        from drama_downloader import get_platform_registry
+        registry = get_platform_registry()
+        self.assertEqual(len(registry), 11)
+        ids = {item["id"] for item in registry}
+        self.assertEqual(ids, {
+            "dramabox", "goodshort", "shortmax", "netshort", "freereels",
+            "kisskh", "hongguo", "dramawave", "raptdrama", "flextv", "stardusttv",
+        })
+        netshort = next(item for item in registry if item["id"] == "netshort")
+        self.assertIn("FlickReels", netshort["aliases"])
         print(f"[OK] Total active platforms: {len(platforms)}")
 
     def test_vtt_to_srt(self):
