@@ -39,7 +39,24 @@ _INSTANCES: List[BasePlatform] = [cls() for cls in PLATFORM_CLASSES]
 
 def get_all_platforms() -> List[BasePlatform]:
     """Returns a list of all instantiated platforms."""
-    return _INSTANCES
+    return list(_INSTANCES)
+
+
+def get_platform_registry() -> List[dict]:
+    """Return serializable platform metadata for GUI/API integrations."""
+    return [
+        {
+            "id": p.platform_id,
+            "name": p.display_name,
+            "aliases": (["FlickReels"] if p.platform_id == "netshort" else []),
+            "supports_subtitles": p.platform_id in {
+                "dramabox", "goodshort", "shortmax", "netshort",
+                "freereels", "kisskh", "hongguo", "dramawave",
+                "raptdrama", "flextv", "stardusttv",
+            },
+        }
+        for p in _INSTANCES
+    ]
 
 
 def get_platform(name_or_id: str) -> Optional[BasePlatform]:
