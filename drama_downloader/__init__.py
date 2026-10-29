@@ -11,6 +11,7 @@ from .platforms import (
     detect_platform,
     get_platform,
     get_all_platforms,
+    get_platform_registry,
     get_video_url,
 )
 from .client import http, HttpClient
@@ -30,6 +31,7 @@ __all__ = [
     "detect_platform",
     "get_platform",
     "get_all_platforms",
+    "get_platform_registry",
     "get_video_url",
     "http",
     "HttpClient",
